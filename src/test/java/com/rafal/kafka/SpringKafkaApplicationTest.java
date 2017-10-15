@@ -21,26 +21,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SpringKafkaApplicationTest {
+
     protected final static String HELLOKAFKA_TOPIC = "helloKafka.t";
 
     @Autowired
     private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
+
     @Autowired
     private Receiver receiver;
+
     @Autowired
     private Sender sender;
+
     @ClassRule
     public static KafkaEmbedded kafkaEmbedded = new KafkaEmbedded(1, true, HELLOKAFKA_TOPIC);
 
     @Before
     public void runBeforeTestMethod() throws Exception {
-        // wait cause all partitions must be assigned
-        for(MessageListenerContainer messageListenerContainer : kafkaListenerEndpointRegistry
-                .getListenerContainers()){
+        // wait until all the partitions are assigned
+        for (MessageListenerContainer messageListenerContainer : kafkaListenerEndpointRegistry
+                .getListenerContainers()) {
             ContainerTestUtils.waitForAssignment(messageListenerContainer,
                     kafkaEmbedded.getPartitionsPerTopic());
         }
     }
+
     @Test
     public void testReceive() throws Exception {
         sender.send(HELLOKAFKA_TOPIC, "Hello Spring Kafka!");

@@ -8,10 +8,6 @@
     <artifactId>messagesKafka</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>messagesKafka</name>
-    <description>Spring Kafka</description>
-    <url>https://www.codenotfound.com/spring-kafka-consumer-producer-example.html</url>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
